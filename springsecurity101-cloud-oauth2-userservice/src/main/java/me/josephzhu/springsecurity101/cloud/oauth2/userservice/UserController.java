@@ -42,7 +42,9 @@ public class UserController {
     }
 
     /**
-     * 只有写权限可以访问，返回访问令牌中的额外信息
+     * 只有写权限可以访问，返回访问令牌中的额外信息（也就是自定义的 Token 增强器 CustomTokenEnhancer 加入到访问令牌中的额外信息，
+     * Key 是 userDetails），这里也演示了使用 TokenStore 来解析 Token 的方式。
+     *
      * @param authentication
      * @return
      */

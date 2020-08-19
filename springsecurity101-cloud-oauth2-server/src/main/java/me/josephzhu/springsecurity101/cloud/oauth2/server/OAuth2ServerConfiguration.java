@@ -29,6 +29,7 @@ import java.util.Arrays;
 @Configuration
 @EnableAuthorizationServer //开启授权服务器
 public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdapter {
+
     @Autowired
     private DataSource dataSource;
     @Autowired
@@ -37,6 +38,7 @@ public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdap
     /**
      * 我们配置了使用数据库来维护客户端信息。虽然在各种Demo中我们经常看到的是在内存中维护客户端信息，通过配置直接写死在这里。
      * 但是，对于实际的应用我们一般都会用数据库来维护这个信息，甚至还会建立一套工作流来允许客户端自己申请ClientID。
+     *
      * @param clients
      * @throws Exception
      */
@@ -48,12 +50,16 @@ public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdap
     /**
      * 这里干了两个事情，首先打开了验证Token的访问权限（以便之后我们演示）。
      * 然后允许ClientSecret明文方式保存并且可以通过表单提交（而不仅仅是Basic Auth方式提交），之后会演示到这个。
+     *
      * @param security
      * @throws Exception
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.checkTokenAccess("permitAll()").allowFormAuthenticationForClients().passwordEncoder(NoOpPasswordEncoder.getInstance());
+        security.checkTokenAccess("permitAll()")
+                // 允许表单提交认证
+                .allowFormAuthenticationForClients()
+                .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 
     /**
@@ -64,6 +70,7 @@ public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdap
      * 2、配置了JWT Token的非对称加密来进行签名
      * 3、配置了一个自定义的Token增强器，把更多信息放入Token中
      * 4、配置了使用JDBC数据库方式来保存用户的授权批准记录
+     *
      * @param endpoints
      * @throws Exception
      */
@@ -92,6 +99,7 @@ public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdap
 
     /**
      * 使用JWT令牌存储
+     *
      * @return
      */
     @Bean
@@ -101,6 +109,7 @@ public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdap
 
     /**
      * 使用JDBC数据库方式来保存用户的授权批准记录
+     *
      * @return
      */
     @Bean
@@ -110,6 +119,7 @@ public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdap
 
     /**
      * 自定义的Token增强器，把更多信息放入Token中
+     *
      * @return
      */
     @Bean
@@ -119,6 +129,7 @@ public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdap
 
     /**
      * 配置JWT令牌使用非对称加密方式来验证
+     *
      * @return
      */
     @Bean

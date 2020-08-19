@@ -10,14 +10,30 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class DemoController {
+
     @Autowired
     OAuth2RestTemplate restTemplate;
 
+    /**
+     * 演示登录后才能访问的安全页面
+     * <p>
+     * securedPage 页面，实现的功能是，把用户信息作为模型传入了视图，这样打开页面后就能显示用户名和权限。
+     *
+     * @param authentication
+     * @return
+     */
     @GetMapping("/securedPage")
     public ModelAndView securedPage(OAuth2Authentication authentication) {
-        return new ModelAndView("securedPage").addObject("authentication", authentication);
+        return new ModelAndView("securedPage")
+                .addObject("authentication", authentication);
     }
 
+    /**
+     * 演示通过 OAuth2RestTemplate 调用受保护资源
+     * <p>
+     * 通过引入 OAuth2RestTemplate，在登录后就可以使用凭据直接从受保护资源服务器拿资源，不需要繁琐地实现获得访问令牌、
+     * 在请求头里加入访问令牌的过程。
+     */
     @GetMapping("/remoteCall")
     public String remoteCall() {
         ResponseEntity<String> responseEntity = restTemplate.getForEntity("http://localhost:8081/user/name", String.class);

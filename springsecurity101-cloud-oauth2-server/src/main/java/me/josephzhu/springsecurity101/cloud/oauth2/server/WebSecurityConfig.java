@@ -11,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.sql.DataSource;
 
-
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
@@ -40,6 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 开放/login和/oauth/authorize两个路径的匿名访问，前者用于登录，后者用于换授权码，这两个端点访问的时候都在登录之前。
      * 设置/login使用表单验证进行登录。
+     *
      * @param http
      * @throws Exception
      */

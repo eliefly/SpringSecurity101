@@ -23,6 +23,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     /**
      * 配置index路径的首页Controller
+     *
      * @param registry
      */
     @Override

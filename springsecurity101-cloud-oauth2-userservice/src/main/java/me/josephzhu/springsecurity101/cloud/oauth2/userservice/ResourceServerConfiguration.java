@@ -22,7 +22,9 @@ import java.io.IOException;
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     /**
-     * 声明了资源服务器的ID是userservice，声明了资源服务器的TokenStore是JWT
+     * 硬编码了资源服务器的 ID 为 userservice
+     * 声明了资源服务器的ID是 userservice，声明了资源服务器的TokenStore是JWT
+     *
      * @param resources
      * @throws Exception
      */
@@ -43,6 +45,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     /**
      * 配置公钥
+     *
      * @return
      */
     @Bean
@@ -61,6 +64,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     /**
      * 配置了除了/user路径之外的请求可以匿名访问
+     *
      * @param http
      * @throws Exception
      */
